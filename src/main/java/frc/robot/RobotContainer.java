@@ -5,59 +5,85 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.autos.PathPlannerAuto;
+import frc.robot.commands.TeleopSwerve;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClawSubsystem;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.WristSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  // Subsystems and Commands
+  private final Drivetrain s_Swerve = new Drivetrain();
+  private final ArmSubsystem m_ArmSubsystem = new ArmSubsystem();
+  private final ClawSubsystem m_ClawSubsystem = new ClawSubsystem();
+  private final WristSubsystem m_WristSubsystem = new WristSubsystem();
+
+  // Xbox Controllers
+  private final CommandXboxController m_DriverController =
+    new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController m_CoDriverController =
+    new CommandXboxController(OperatorConstants.kCoDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    s_Swerve.setDefaultCommand(
+      new TeleopSwerve(
+        s_Swerve,
+          () -> -m_DriverController.getLeftY(), // move up/down
+          () -> -m_DriverController.getLeftX(), // move left/right
+          () -> -m_DriverController.getRightX(), // rotate
+          () -> m_DriverController.back().getAsBoolean(), // robot centric button
+          () -> m_DriverController.rightBumper().getAsBoolean() // slow button
+        ));
+    m_ArmSubsystem.setDefaultCommand(
+      Commands.run(
+      () ->
+      m_ArmSubsystem.ArmTurnMethod(m_CoDriverController.getLeftX()), m_ArmSubsystem));
+    m_WristSubsystem.setDefaultCommand(
+      Commands.run(
+      () ->
+      m_WristSubsystem.WristTurn(m_CoDriverController.getRightX()), m_WristSubsystem));
+    /*
+      m_ElevatorSubsystem.setDefaultCommand(
+      Commands.run(
+        () ->
+        m_ElevatorSubsystem.ElevatorMoveMethod(m_CoDriverController.getLeftY()), m_ElevatorSubsystem));
+    );
+    */
+      
     // Configure the trigger bindings
     configureBindings();
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    // ArmSubsystem controls
+    m_CoDriverController.a().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(0.0), m_ArmSubsystem) );
+    m_CoDriverController.b().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(45.0), m_ArmSubsystem) );
+    m_CoDriverController.x().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(-90.0), m_ArmSubsystem) );
+    m_CoDriverController.y().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(90.0), m_ArmSubsystem) );
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    // WristSubsystem controls
+    m_CoDriverController.povUp().onTrue( Commands.run(() -> m_WristSubsystem.WristToAngle(0.0), m_WristSubsystem).withTimeout(1) );
+    m_CoDriverController.povRight().onTrue( Commands.run(() -> m_WristSubsystem.WristToAngle(90.0), m_WristSubsystem).withTimeout(1) );
+    m_CoDriverController.povLeft().onTrue( Commands.run(() -> m_WristSubsystem.WristToAngle(180.0), m_WristSubsystem).withTimeout(1) );
+
+    // ClawSubsystem controls
+    m_CoDriverController.rightBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(1.0));
+    m_CoDriverController.leftBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(-1.0));
+    
+    // Swerve controls
+    m_DriverController.start().onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
+  // Return auton command to main
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return new PathPlannerAuto(s_Swerve);
   }
+
 }
