@@ -57,6 +57,14 @@ public final class Constants {
     public static final double TurnToSpeed = 0.20;
   }
 
+  // CommandGroup Constants
+  public static class CommandGroupConstants {
+    public static final double TopArmAngle = 60.0;
+    public static final double TopElevatorPosition = 30.0;
+    public static final double MiddleArmAngle = 60.0;
+    public static final double MiddleElevatorPosition = 30.0;
+  }
+
   // Swerve Constants
   public static final class Swerve {
     // Control Constants
