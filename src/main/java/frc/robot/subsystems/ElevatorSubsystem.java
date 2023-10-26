@@ -31,7 +31,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   // Moves the elevator manually. Positive speed is forward
   public void ElevatorTurnMethod(double speed) {
-    m_Elevator.set(speed*Constants.ElevatorConstants.ManualSpeed);
+    m_Elevator.set(-speed*Constants.ElevatorConstants.ManualSpeed);
   }
 
   // Move the elevator to a specified distance. Slows down based on the current arm distance
@@ -42,12 +42,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
     // Move backwards
     else if ((m_ElevatorEncoder.getPosition() - distance) > 0) {
-        m_Elevator.set(-Constants.ElevatorConstants.TurnToSpeed*
+        m_Elevator.set(Constants.ElevatorConstants.TurnToSpeed*
       Math.min(1.0, Math.max((m_ElevatorEncoder.getPosition() - distance)/Constants.ElevatorConstants.SlowMultiplier, 0.0)));
     }
     // Move forwards
     else if ((m_ElevatorEncoder.getPosition() - distance) < 0) {
-        m_Elevator.set(Constants.ElevatorConstants.TurnToSpeed*
+        m_Elevator.set(-Constants.ElevatorConstants.TurnToSpeed*
       Math.min(1.0, Math.max((distance - m_ElevatorEncoder.getPosition())/Constants.ElevatorConstants.SlowMultiplier, 0.0)));
     }
     // Display SmartDashboard

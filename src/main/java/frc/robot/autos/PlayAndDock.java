@@ -16,7 +16,7 @@ import frc.robot.subsystems.Drivetrain;
 public class PlayAndDock extends SequentialCommandGroup {
   public PlayAndDock(Drivetrain s_Swerve) {
     // loads path given a file name and velocity + acceleration constraints
-    PathPlannerTrajectory path = PathPlanner.loadPath("playdock", new PathConstraints(2, 3));
+    PathPlannerTrajectory path = PathPlanner.loadPath("examplepath", new PathConstraints(2, 3));
 
     // Make new PPSwerveControllerCommand with the given constructor parameters
     PPSwerveControllerCommand swervePathCommand = 

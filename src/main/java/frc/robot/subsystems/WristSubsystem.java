@@ -17,8 +17,11 @@ public class WristSubsystem extends SubsystemBase {
   private final Encoder m_WristEncoder = new Encoder(0, 1,true); 
 
   public WristSubsystem() {
+    // Set encoder distance to 0
+    m_WristEncoder.reset();
     // Change distance to angle instead of pulses
     m_WristEncoder.setDistancePerPulse(Constants.WristConstants.PulsesToAngle);
+    m_Wrist.setInverted(true);
   }
 
   @Override

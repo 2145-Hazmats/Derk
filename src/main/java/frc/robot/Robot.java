@@ -33,9 +33,9 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     m_robotContainer.m_Chooser.setDefaultOption("Test PathPlanner", m_robotContainer.c_TestPathPlanner);
-    m_robotContainer.m_Chooser.addOption("Play and Leave", m_robotContainer.c_PlayAndLeave);
-    m_robotContainer.m_Chooser.addOption("Play and Dock", m_robotContainer.c_PlayAndDock);
-    m_robotContainer.m_Chooser.addOption("Play Leave and Dock", m_robotContainer.c_PlayLeaveAndDock);
+    //m_robotContainer.m_Chooser.addOption("Play and Leave", m_robotContainer.c_PlayAndLeave);
+    //m_robotContainer.m_Chooser.addOption("Play and Dock", m_robotContainer.c_PlayAndDock);
+    //m_robotContainer.m_Chooser.addOption("Play Leave and Dock", m_robotContainer.c_PlayLeaveAndDock);
     SmartDashboard.putData("Auton Picker", m_robotContainer.m_Chooser);
   }
 

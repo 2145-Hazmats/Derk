@@ -21,7 +21,7 @@ public final class Constants {
 
   // Arm Constants
   public static class ArmConstants {
-    public static final int kMotorID = 101;
+    public static final int kMotorID = 22;
     public static final double EncoderToAngle = 180/124.6; // Encoder multiplier
 
     public static final double ManualSpeed = 0.3;
@@ -33,15 +33,15 @@ public final class Constants {
 
   // Claw Constants
   public static class ClawConstants{
-    public static final int kMotorID = 102;
+    public static final int kMotorID = 23;
   }
 
   // Elevator Constants
   public static class ElevatorConstants{
-    public static final int kMotorID = 103;
+    public static final int kMotorID = 21;
     public static final double EncoderToAngle = 0.235619449; // Encoder multiplier
 
-    public static final double ManualSpeed = 0.20;
+    public static final double ManualSpeed = 0.50;
     // TurnToAngle constants
     public static final double TurnToSpeed = 0.25; // initial speed of TurnToAngle
     public static final double DegreeOfError = 0.5; // when TurnToAngle should stop the motor
@@ -50,7 +50,7 @@ public final class Constants {
 
   // Wrist Constants
   public static class WristConstants {
-    public static final int kMotorID = 104;
+    public static final int kMotorID = 20;
     public static final double PulsesToAngle = 8.108108108; // For converting pulses to angle
 
     public static final double ManualSpeed = 0.20;

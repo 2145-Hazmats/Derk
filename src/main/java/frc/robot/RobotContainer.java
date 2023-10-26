@@ -81,14 +81,14 @@ public class RobotContainer {
     m_CoDriverController.x().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(-90.0), m_ArmSubsystem) );
     m_CoDriverController.y().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(90.0), m_ArmSubsystem) );
 
+    // ClawSubsystem controls
+    m_CoDriverController.rightBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(1.0));
+    m_CoDriverController.leftBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(-1.0));
+
     // WristSubsystem controls
     m_CoDriverController.povUp().onTrue( Commands.run(() -> m_WristSubsystem.WristToAngle(0.0), m_WristSubsystem).withTimeout(1) );
     m_CoDriverController.povRight().onTrue( Commands.run(() -> m_WristSubsystem.WristToAngle(90.0), m_WristSubsystem).withTimeout(1) );
     m_CoDriverController.povLeft().onTrue( Commands.run(() -> m_WristSubsystem.WristToAngle(180.0), m_WristSubsystem).withTimeout(1) );
-
-    // ClawSubsystem controls
-    m_CoDriverController.rightBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(1.0));
-    m_CoDriverController.leftBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(-1.0));
     
     // Swerve controls
     m_DriverController.start().onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
