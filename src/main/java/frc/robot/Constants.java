@@ -26,23 +26,35 @@ public final class Constants {
 
     public static final double ManualSpeed = 0.3;
     // TurnToAngle constants
-    public static final double TurnToSpeed = 1.0;
-    public static final double DegreeOfError = 0.5;
-    public static final double SlowMultiplier = 20.0;
-  }
-
-  // Wrist Constants
-  public static class WristConstants {
-    public static final int kMotorID = 102;
-    public static final double PulsesToAngle = 8.108108108; // For converting pulses to angle
-
-    public static final double ManualSpeed = 0.20;
-    public static final double TurnToSpeed = 0.20;
+    public static final double TurnToSpeed = 1.0; // initial speed of TurnToAngle
+    public static final double DegreeOfError = 0.5; // when TurnToAngle should stop the motor
+    public static final double SlowMultiplier = 20.0; // higher = smoother but slower
   }
 
   // Claw Constants
   public static class ClawConstants{
+    public static final int kMotorID = 102;
+  }
+
+  // Elevator Constants
+  public static class ElevatorConstants{
     public static final int kMotorID = 103;
+    public static final double EncoderToAngle = 0.235619449; // Encoder multiplier
+
+    public static final double ManualSpeed = 0.20;
+    // TurnToAngle constants
+    public static final double TurnToSpeed = 0.25; // initial speed of TurnToAngle
+    public static final double DegreeOfError = 0.5; // when TurnToAngle should stop the motor
+    public static final double SlowMultiplier = 10.0; // higher = smoother but slower
+  }
+
+  // Wrist Constants
+  public static class WristConstants {
+    public static final int kMotorID = 104;
+    public static final double PulsesToAngle = 8.108108108; // For converting pulses to angle
+
+    public static final double ManualSpeed = 0.20;
+    public static final double TurnToSpeed = 0.20;
   }
 
   // Swerve Constants

@@ -5,12 +5,17 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.autos.PathPlannerAuto;
+import frc.robot.autos.PlayAndDock;
+import frc.robot.autos.PlayAndLeave;
+import frc.robot.autos.PlayLeaveAndDock;
+import frc.robot.autos.TestPathPlanner;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.WristSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -22,7 +27,16 @@ public class RobotContainer {
   private final Drivetrain s_Swerve = new Drivetrain();
   private final ArmSubsystem m_ArmSubsystem = new ArmSubsystem();
   private final ClawSubsystem m_ClawSubsystem = new ClawSubsystem();
+  private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   private final WristSubsystem m_WristSubsystem = new WristSubsystem();
+
+  // Auton chooser
+  public SendableChooser<Command> m_Chooser = new SendableChooser<>();
+  // Auto commands
+  public final Command c_TestPathPlanner = new TestPathPlanner(s_Swerve);
+  public final Command c_PlayAndLeave = new PlayAndLeave(s_Swerve);
+  public final Command c_PlayAndDock = new PlayAndDock(s_Swerve);
+  public final Command c_PlayLeaveAndDock = new PlayLeaveAndDock(s_Swerve);
 
   // Xbox Controllers
   private final CommandXboxController m_DriverController =
@@ -45,18 +59,17 @@ public class RobotContainer {
       Commands.run(
       () ->
       m_ArmSubsystem.ArmTurnMethod(m_CoDriverController.getLeftX()), m_ArmSubsystem));
+    
     m_WristSubsystem.setDefaultCommand(
       Commands.run(
       () ->
       m_WristSubsystem.WristTurn(m_CoDriverController.getRightX()), m_WristSubsystem));
-    /*
-      m_ElevatorSubsystem.setDefaultCommand(
+    
+    m_ElevatorSubsystem.setDefaultCommand(
       Commands.run(
-        () ->
-        m_ElevatorSubsystem.ElevatorMoveMethod(m_CoDriverController.getLeftY()), m_ElevatorSubsystem));
-    );
-    */
-      
+      () ->
+      m_ElevatorSubsystem.ElevatorTurnMethod(m_CoDriverController.getLeftY()), m_ElevatorSubsystem));
+    
     // Configure the trigger bindings
     configureBindings();
   }
@@ -83,7 +96,7 @@ public class RobotContainer {
 
   // Return auton command to main
   public Command getAutonomousCommand() {
-    return new PathPlannerAuto(s_Swerve);
+    return m_Chooser.getSelected();
   }
 
 }

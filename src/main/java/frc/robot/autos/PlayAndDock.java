@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
 
-public class PathPlannerAuto extends SequentialCommandGroup {
-  public PathPlannerAuto(Drivetrain s_Swerve) {
+public class PlayAndDock extends SequentialCommandGroup {
+  public PlayAndDock(Drivetrain s_Swerve) {
     // loads path given a file name and velocity + acceleration constraints
-    PathPlannerTrajectory path = PathPlanner.loadPath("path1", new PathConstraints(2, 3));
+    PathPlannerTrajectory path = PathPlanner.loadPath("playdock", new PathConstraints(2, 3));
 
     // Make new PPSwerveControllerCommand with the given constructor parameters
     PPSwerveControllerCommand swervePathCommand = 
@@ -33,14 +33,14 @@ public class PathPlannerAuto extends SequentialCommandGroup {
     
     // Auton commands
     addCommands(
-      // Reset odometry based on initial pose of path
-      new InstantCommand(() -> s_Swerve.resetOdometry(path.getInitialPose())),
-      new WaitCommand(1),
-      // Run the actual path planner
-      swervePathCommand,
-      // 0.1 Seconds after path ends, feed 0 into motors
-      new WaitCommand(0.1),
-      new InstantCommand(() -> s_Swerve.drive(new Translation2d(0,0), 0, false, true))
+     // Reset odometry based on initial pose of path
+     new InstantCommand(() -> s_Swerve.resetOdometry(path.getInitialPose())),
+     new WaitCommand(1),
+     // Run the actual path planner
+     swervePathCommand,
+     // 0.1 Seconds after path ends, feed 0 into motors
+     new WaitCommand(0.1),
+     new InstantCommand(() -> s_Swerve.drive(new Translation2d(0,0), 0, false, true))
     );
   
   }

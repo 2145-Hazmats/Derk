@@ -9,14 +9,12 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  private final CANSparkMax m_Arm = new CANSparkMax(4, MotorType.kBrushless);
+  private final CANSparkMax m_Arm = new CANSparkMax(Constants.ArmConstants.kMotorID, MotorType.kBrushless);
   private final RelativeEncoder m_ArmEncoder = m_Arm.getEncoder();
 
   public ArmSubsystem() {
@@ -34,11 +32,6 @@ public class ArmSubsystem extends SubsystemBase {
   // Runs the arm manually. Positive speed is clockwise
   public void ArmTurnMethod(double speed) {
     m_Arm.set(speed*Constants.ArmConstants.ManualSpeed);
-  }
-
-  // Command for ArmTurnMethod
-  public Command ArmTurnCommand(double speed) {
-    return new StartEndCommand(()->this.ArmTurnMethod(speed), ()->this.ArmTurnMethod(0.0), this);
   }
 
   // Turn the arm to a specified angle. Slows down based on the current arm angle
