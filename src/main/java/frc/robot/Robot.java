@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.config.CTREConfigs;
@@ -30,6 +31,12 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    m_robotContainer.m_Chooser.setDefaultOption("Test PathPlanner", m_robotContainer.c_TestPathPlanner);
+    m_robotContainer.m_Chooser.addOption("Play and Leave", m_robotContainer.c_PlayAndLeave);
+    m_robotContainer.m_Chooser.addOption("Play and Dock", m_robotContainer.c_PlayAndDock);
+    m_robotContainer.m_Chooser.addOption("Play Leave and Dock", m_robotContainer.c_PlayLeaveAndDock);
+    SmartDashboard.putData("Auton Picker", m_robotContainer.m_Chooser);
   }
 
   /**

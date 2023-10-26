@@ -17,10 +17,10 @@ import frc.robot.Constants;
 public class ClawSubsystem extends SubsystemBase {
 
   private final CANSparkMax m_Claw = new CANSparkMax(Constants.ClawConstants.kMotorID, MotorType.kBrushless);
-  private final RelativeEncoder ClawEncoder = m_Claw.getEncoder();
+  private final RelativeEncoder m_ClawEncoder = m_Claw.getEncoder();
   
   public ClawSubsystem() {
-    ClawEncoder.setPosition(0);
+    m_ClawEncoder.setPosition(0);
   }
 
   @Override
