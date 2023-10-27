@@ -26,7 +26,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber(("Position"), m_ArmEncoder.getPosition());
+    SmartDashboard.putNumber(("Arm Angle"), m_ArmEncoder.getPosition());
   }
 
   // Runs the arm manually. Positive speed is clockwise

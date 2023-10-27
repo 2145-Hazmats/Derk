@@ -24,9 +24,9 @@ public final class Constants {
     public static final int kMotorID = 22;
     public static final double EncoderToAngle = 180/124.6; // Encoder multiplier
 
-    public static final double ManualSpeed = 0.3;
+    public static final double ManualSpeed = 0.6;
     // TurnToAngle constants
-    public static final double TurnToSpeed = 1.0; // initial speed of TurnToAngle
+    public static final double TurnToSpeed = 0.50; // initial speed of TurnToAngle
     public static final double DegreeOfError = 0.5; // when TurnToAngle should stop the motor
     public static final double SlowMultiplier = 20.0; // higher = smoother but slower
   }
@@ -41,11 +41,11 @@ public final class Constants {
     public static final int kMotorID = 21;
     public static final double EncoderToAngle = 0.235619449; // Encoder multiplier
 
-    public static final double ManualSpeed = 0.50;
+    public static final double ManualSpeed = 0.60;
     // TurnToAngle constants
-    public static final double TurnToSpeed = 0.25; // initial speed of TurnToAngle
+    public static final double TurnToSpeed = 0.60; // initial speed of TurnToAngle
     public static final double DegreeOfError = 0.5; // when TurnToAngle should stop the motor
-    public static final double SlowMultiplier = 10.0; // higher = smoother but slower
+    public static final double SlowMultiplier = 20.0; // higher = smoother but slower
   }
 
   // Wrist Constants
@@ -59,10 +59,11 @@ public final class Constants {
 
   // CommandGroup Constants
   public static class CommandGroupConstants {
-    public static final double TopArmAngle = 60.0;
-    public static final double TopElevatorPosition = 30.0;
-    public static final double MiddleArmAngle = 60.0;
-    public static final double MiddleElevatorPosition = 30.0;
+    public static final double TopArmAngle = -46.0;
+    public static final double TopElevatorPosition = 6.7;
+    public static final double MiddleArmAngle = -40.0;
+    public static final double MiddleElevatorPosition = 1.0;
+    public static final double DownAngle = 6.0;
   }
 
   // Swerve Constants

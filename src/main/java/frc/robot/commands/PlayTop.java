@@ -14,33 +14,34 @@ import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 
 
-public class PlayMiddle extends SequentialCommandGroup {
-  public PlayMiddle(ElevatorSubsystem m_Elevator, ArmSubsystem m_Arm, ClawSubsystem m_Claw) {
+public class PlayTop extends SequentialCommandGroup {
+  public PlayTop(ElevatorSubsystem m_Elevator, ArmSubsystem m_Arm, ClawSubsystem m_Claw) {
     addCommands(
       new ParallelCommandGroup(
         // Rotate Arm
         Commands.run(
             () -> {
-                m_Arm.ArmTurnToAngle(Constants.CommandGroupConstants.MiddleArmAngle);
+                m_Arm.ArmTurnToAngle(Constants.CommandGroupConstants.TopArmAngle);
             },
-            m_Arm).withTimeout(1.5),
+            m_Arm).withTimeout(2.3),
         // Extend Elevator
         Commands.runOnce(
             () -> {
-                m_Elevator.ElevatorTurnToDistance(Constants.CommandGroupConstants.MiddleElevatorPosition);
+                m_Elevator.ElevatorTurnToDistance(Constants.CommandGroupConstants.TopElevatorPosition);
             },
-            m_Elevator).withTimeout(1.5)
+            m_Elevator).withTimeout(2.3)
     ),
       // Rotate Arm
       Commands.run(
             () -> {
-                m_Arm.ArmTurnToAngle(Constants.CommandGroupConstants.MiddleArmAngle - Constants.CommandGroupConstants.DownAngle);
+                m_Arm.ArmTurnToAngle(Constants.CommandGroupConstants.TopArmAngle - Constants.CommandGroupConstants.DownAngle);
             },
-            m_Arm).withTimeout(0.75),
+            m_Arm).withTimeout(0.5),
       // Release Cone
       m_Claw.SetClawSpeedCommand(0.5).withTimeout(0.25),
       // Wait Buffer
       new WaitCommand(0.5),
+      // Reset Arm
       Commands.run(
             () -> {
                 m_Arm.ArmTurnToAngle(0);
@@ -53,7 +54,7 @@ public class PlayMiddle extends SequentialCommandGroup {
         },
         m_Elevator).withTimeout(1.5),
       // Wait Buffer
-      new WaitCommand (1.5)
-    );
+      new WaitCommand(1.5)
+      );
   }
 }

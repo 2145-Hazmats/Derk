@@ -26,7 +26,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber(("Position"), m_ElevatorEncoder.getPosition());
+    SmartDashboard.putNumber(("Elevator Position"), m_ElevatorEncoder.getPosition());
   }
 
   // Moves the elevator manually. Positive speed is forward
@@ -40,14 +40,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     if (Math.abs(m_ElevatorEncoder.getPosition() - distance) <= Constants.ElevatorConstants.DegreeOfError) {
         m_Elevator.stopMotor();
     }
-    // Move backwards
+    // Move some direction
     else if ((m_ElevatorEncoder.getPosition() - distance) > 0) {
-        m_Elevator.set(Constants.ElevatorConstants.TurnToSpeed*
+        m_Elevator.set(-Constants.ElevatorConstants.TurnToSpeed*
       Math.min(1.0, Math.max((m_ElevatorEncoder.getPosition() - distance)/Constants.ElevatorConstants.SlowMultiplier, 0.0)));
     }
-    // Move forwards
+    // Move the other direction
     else if ((m_ElevatorEncoder.getPosition() - distance) < 0) {
-        m_Elevator.set(-Constants.ElevatorConstants.TurnToSpeed*
+        m_Elevator.set(Constants.ElevatorConstants.TurnToSpeed*
       Math.min(1.0, Math.max((distance - m_ElevatorEncoder.getPosition())/Constants.ElevatorConstants.SlowMultiplier, 0.0)));
     }
     // Display SmartDashboard
