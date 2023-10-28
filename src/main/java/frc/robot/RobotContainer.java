@@ -5,18 +5,15 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.autos.PlayAndDock;
 import frc.robot.autos.PlayAndLeave;
-import frc.robot.autos.PlayLeaveAndDock;
 import frc.robot.autos.TestPathPlanner;
-import frc.robot.commands.PlayMiddle;
-import frc.robot.commands.PlayTop;
+//import frc.robot.commands.UNUSED_PlayMiddle;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.WristSubsystem;
+//import frc.robot.subsystems.WristSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -35,10 +32,8 @@ public class RobotContainer {
   // Auton chooser
   public SendableChooser<Command> m_Chooser = new SendableChooser<>();
   // Auto commands
-  public final Command c_TestPathPlanner = new TestPathPlanner(s_Swerve);
-  public final Command c_PlayAndLeave = new PlayAndLeave(s_Swerve);
-  public final Command c_PlayAndDock = new PlayAndDock(s_Swerve);
-  public final Command c_PlayLeaveAndDock = new PlayLeaveAndDock(s_Swerve);
+  //public final Command c_TestPathPlanner = new TestPathPlanner(s_Swerve);
+  //public final Command c_PlayAndLeave = new PlayAndLeave(s_Swerve, m_ArmSubsystem, m_ElevatorSubsystem, m_ClawSubsystem);
 
   // Xbox Controllers
   private final CommandXboxController m_DriverController =
@@ -67,10 +62,11 @@ public class RobotContainer {
       () ->
       m_WristSubsystem.WristTurn(m_CoDriverController.getRightX()), m_WristSubsystem));
     */
+    
     m_ElevatorSubsystem.setDefaultCommand(
       Commands.run(
       () ->
-      m_ElevatorSubsystem.ElevatorTurnMethod(m_CoDriverController.getRightY()), m_ElevatorSubsystem));
+      m_ElevatorSubsystem.ElevatorTurnMethod(m_CoDriverController.getRightY(), m_CoDriverController.b().getAsBoolean()), m_ElevatorSubsystem));
     
     // Configure the trigger bindings
     configureBindings();
@@ -79,20 +75,16 @@ public class RobotContainer {
   private void configureBindings() {
     // ArmSubsystem controls
     m_CoDriverController.a().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(0.0), m_ArmSubsystem).withTimeout(1.0) );
-    m_CoDriverController.b().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(-30.0), m_ArmSubsystem).withTimeout(1.0) );
-    m_CoDriverController.y().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(-45.0), m_ArmSubsystem).withTimeout(1.0) );
-    m_CoDriverController.x().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(45.0), m_ArmSubsystem).withTimeout(1.0) );
+    //m_CoDriverController.b().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(-30.0), m_ArmSubsystem).withTimeout(1.0) );
+    m_CoDriverController.x().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(-45.0), m_ArmSubsystem).withTimeout(1.0) );
+    //m_CoDriverController.x().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(45.0), m_ArmSubsystem).withTimeout(1.0) );
 
     // ClawSubsystem controls
-    m_CoDriverController.rightBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(-1.0));
-    m_CoDriverController.leftBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(1.0));
+    m_CoDriverController.leftBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(-1.0));
+    m_CoDriverController.rightBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(1.0));
 
     // Swerve controls
     m_DriverController.start().onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-
-    // Command controls
-    m_CoDriverController.povRight().onTrue(new PlayMiddle(m_ElevatorSubsystem, m_ArmSubsystem, m_ClawSubsystem));
-    m_CoDriverController.povUp().onTrue(new PlayTop(m_ElevatorSubsystem, m_ArmSubsystem, m_ClawSubsystem));
   }
 
   // Return auton command to main

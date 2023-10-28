@@ -14,9 +14,10 @@ import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 
 
-public class PlayMiddle extends SequentialCommandGroup {
-  public PlayMiddle(ElevatorSubsystem m_Elevator, ArmSubsystem m_Arm, ClawSubsystem m_Claw) {
+public class UNUSED_PlayMiddle extends SequentialCommandGroup {
+  public UNUSED_PlayMiddle(ElevatorSubsystem m_Elevator, ArmSubsystem m_Arm, ClawSubsystem m_Claw) {
     addCommands(
+    /*
       new ParallelCommandGroup(
         // Rotate Arm
         Commands.run(
@@ -54,6 +55,7 @@ public class PlayMiddle extends SequentialCommandGroup {
         m_Elevator).withTimeout(1.5),
       // Wait Buffer
       new WaitCommand (1.5)
+    */
     );
   }
 }

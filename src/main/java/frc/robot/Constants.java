@@ -59,8 +59,6 @@ public final class Constants {
 
   // CommandGroup Constants
   public static class CommandGroupConstants {
-    public static final double TopArmAngle = -46.0;
-    public static final double TopElevatorPosition = 6.7;
     public static final double MiddleArmAngle = -40.0;
     public static final double MiddleElevatorPosition = 1.0;
     public static final double DownAngle = 6.0;

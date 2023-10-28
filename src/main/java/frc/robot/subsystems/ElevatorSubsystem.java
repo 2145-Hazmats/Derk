@@ -23,7 +23,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     // Set conversion factor
     m_ElevatorEncoder.setPositionConversionFactor(Constants.ElevatorConstants.EncoderToAngle);
   }
-
+  
   @Override
   public void periodic() {
     SmartDashboard.putNumber(("Elevator Position"), m_ElevatorEncoder.getPosition());
@@ -34,6 +34,17 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_Elevator.set(-speed*Constants.ElevatorConstants.ManualSpeed);
   }
 
+  // Moves the elevator manually. Positive speed is forward. Slow mode
+  public void ElevatorTurnMethod(double speed, boolean slow) {
+    if (slow == true) {
+      m_Elevator.set(-(speed/2)*Constants.ElevatorConstants.ManualSpeed);
+    }
+    else {
+      m_Elevator.set(-speed*Constants.ElevatorConstants.ManualSpeed);
+    }
+  }
+
+  /*
   // Move the elevator to a specified distance. Slows down based on the current arm distance
   public void ElevatorTurnToDistance(double distance) {
     // Stop if angle is close enough
@@ -54,5 +65,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber(("Goal:"), distance);
     SmartDashboard.putNumber(("Speed:"), Constants.ElevatorConstants.TurnToSpeed*Math.min(1.0, Math.max((distance - m_ElevatorEncoder.getPosition())/Constants.ElevatorConstants.SlowMultiplier, -1.0))*100);
   }
+  */
 
 }
