@@ -7,9 +7,8 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -24,8 +23,7 @@ public class PlayAndLeave extends SequentialCommandGroup {
     PathPlannerTrajectory path = PathPlanner.loadPath("playandleave", new PathConstraints(1, 3));
 
     // Make new PPSwerveControllerCommand with the given constructor parameters
-    PPSwerveControllerCommand swervePathCommand = 
-    new PPSwerveControllerCommand(
+    PPSwerveControllerCommand swervePathCommand = new PPSwerveControllerCommand(
       path,
       s_Swerve::getPose,
       Constants.Swerve.swerveKinematics,
@@ -36,11 +34,13 @@ public class PlayAndLeave extends SequentialCommandGroup {
       true,
       s_Swerve);
     
+    Command waitC = new WaitCommand(0.5);
+    
     // Auton commands
     addCommands(
       // Reset odometry based on initial pose of path
       new InstantCommand(() -> s_Swerve.resetOdometry(path.getInitialPose())),
-      new WaitCommand(0.5),
+      waitC,
       // Run the actual path planner
       swervePathCommand,
       // 0.1 Seconds after path ends, feed 0 into motors
