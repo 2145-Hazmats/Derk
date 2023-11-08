@@ -32,8 +32,8 @@ public class RobotContainer {
   // Auton chooser
   public SendableChooser<Command> m_Chooser = new SendableChooser<>();
   // Auto commands
-  //public final Command c_TestPathPlanner = new TestPathPlanner(s_Swerve);
-  //public final Command c_PlayAndLeave = new PlayAndLeave(s_Swerve, m_ArmSubsystem, m_ElevatorSubsystem, m_ClawSubsystem);
+  public final Command c_TestPathPlanner = new TestPathPlanner(s_Swerve);
+  public final Command c_PlayAndLeave = new PlayAndLeave(s_Swerve, m_ArmSubsystem, m_ElevatorSubsystem, m_ClawSubsystem);
 
   // Xbox Controllers
   private final CommandXboxController m_DriverController =

@@ -67,7 +67,7 @@ public final class Constants {
   // Swerve Constants
   public static final class Swerve {
     // Control Constants
-    public static final double stickDeadband = 0.0; // Modified in Driver Station
+    public static final double stickDeadband = 0.05; // Modified in Driver Station
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
     // Drivetrain Constants

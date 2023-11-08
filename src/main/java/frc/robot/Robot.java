@@ -32,8 +32,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    //m_robotContainer.m_Chooser.setDefaultOption("Play and Leave", m_robotContainer.c_PlayAndLeave);
-    //m_robotContainer.m_Chooser.addOption("Test PathPlanner", m_robotContainer.c_TestPathPlanner);
+    m_robotContainer.m_Chooser.setDefaultOption("Play and Leave", m_robotContainer.c_PlayAndLeave);
+    m_robotContainer.m_Chooser.addOption("Test PathPlanner", m_robotContainer.c_TestPathPlanner);
     SmartDashboard.putData("Auton Picker", m_robotContainer.m_Chooser);
   }
 
