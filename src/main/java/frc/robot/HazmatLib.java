@@ -64,7 +64,7 @@ public class HazmatLib extends CommandBase{
     }
 
 
-    
+
     /**
     * Turns the motor to a specified distance. De/Accelerates based on distance.
     *
@@ -78,10 +78,9 @@ public class HazmatLib extends CommandBase{
     * @param requirements The subsystems to require.
     */
     
-    //public static <T extends com.revrobotics.CANSparkMax> void TurnToDistanceFakePID( - DELETE if already works
+    // Don't think the command one will work.
     public Command CommandFakePID(
             double distance,
-            //T motorT, - DELETE if already works
             Consumer<Double> motorConsumer,
             Supplier<Double> encoderSupplier,
             double speedMultiplier,
