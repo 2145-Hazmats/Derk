@@ -27,7 +27,7 @@ public final class Constants {
     public static final double ManualSpeed = 0.6;
     // TurnToAngle constants
     public static final double TurnToSpeed = 0.50; // initial speed of TurnToAngle
-    public static final double DegreeOfError = 0.5; // when TurnToAngle should stop the motor
+    public static final double MaxErrorSize = 0.5; // when TurnToAngle should stop the motor
     public static final double SlowMultiplier = 20.0; // higher = smoother but slower
   }
 

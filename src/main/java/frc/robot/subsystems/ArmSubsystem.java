@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.HazmatLib;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -34,6 +35,18 @@ public class ArmSubsystem extends SubsystemBase {
     m_Arm.set(speed*Constants.ArmConstants.ManualSpeed);
   }
 
+  public void ArmTurnToAngle(double angle) {
+    HazmatLib.MethodFakePID(
+      angle,
+      m_Arm::set,
+      m_ArmEncoder::getPosition,
+      Constants.ArmConstants.TurnToSpeed,
+      Constants.ArmConstants.MaxErrorSize,
+      Constants.ArmConstants.SlowMultiplier,
+      false);
+  }
+
+  /*
   // Turn the arm to a specified angle. Slows down based on the current arm angle
   public void ArmTurnToAngle(double angle) {
     // Stop if angle is close enough
@@ -54,5 +67,6 @@ public class ArmSubsystem extends SubsystemBase {
     SmartDashboard.putNumber(("Goal:"), angle);
     SmartDashboard.putNumber(("Speed:"), Constants.ArmConstants.TurnToSpeed*Math.min(1.0, Math.max((angle - m_ArmEncoder.getPosition())/Constants.ArmConstants.SlowMultiplier, -1.0))*100);
   }
+  */
 
 }

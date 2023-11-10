@@ -9,14 +9,19 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.HazmatLib;
 
 public class ElevatorSubsystem extends SubsystemBase {
 
   private final CANSparkMax m_Elevator = new CANSparkMax(Constants.ElevatorConstants.kMotorID, MotorType.kBrushless);
   private final RelativeEncoder m_ElevatorEncoder = m_Elevator.getEncoder();
   
+  // intialize new hazmatLib object
+  private HazmatLib m_HazmatLib = new HazmatLib();
+
   public ElevatorSubsystem() {
     // reset encoder to 0 when code is deployed. Not when the robot is enabled/disabled btw
     m_ElevatorEncoder.setPosition(0.0);
@@ -42,6 +47,18 @@ public class ElevatorSubsystem extends SubsystemBase {
     else {
       m_Elevator.set(-speed*Constants.ElevatorConstants.ManualSpeed);
     }
+  }
+
+  public Command ElevatorTurnToDistance(double distance) {
+    return m_HazmatLib.CommandFakePID(
+      distance,
+      m_Elevator::set,
+      m_ElevatorEncoder::getPosition,
+      0.20,
+      3.0,
+      1.0,
+      false,
+      this);
   }
 
   /*

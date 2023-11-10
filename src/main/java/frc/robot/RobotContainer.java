@@ -79,6 +79,9 @@ public class RobotContainer {
     m_CoDriverController.x().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(-45.0), m_ArmSubsystem).withTimeout(1.0) );
     //m_CoDriverController.x().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(45.0), m_ArmSubsystem).withTimeout(1.0) );
 
+    m_CoDriverController.y().onTrue(m_ElevatorSubsystem.ElevatorTurnToDistance(5.0));
+    m_CoDriverController.b().onTrue(m_ElevatorSubsystem.ElevatorTurnToDistance(2.0));
+
     // ClawSubsystem controls
     m_CoDriverController.leftBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(-1.0));
     m_CoDriverController.rightBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(1.0));
