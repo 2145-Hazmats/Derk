@@ -9,9 +9,10 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.HazmatLib;
+import frc.robot.FakePID;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -35,38 +36,16 @@ public class ArmSubsystem extends SubsystemBase {
     m_Arm.set(speed*Constants.ArmConstants.ManualSpeed);
   }
 
-  public void ArmTurnToAngle(double angle) {
-    HazmatLib.MethodFakePID(
+  public Command ArmTurnToAngle(double angle) {
+    return new FakePID(
       angle,
       m_Arm::set,
       m_ArmEncoder::getPosition,
       Constants.ArmConstants.TurnToSpeed,
       Constants.ArmConstants.MaxErrorSize,
       Constants.ArmConstants.SlowMultiplier,
-      false);
+      false,
+      this);
   }
-
-  /*
-  // Turn the arm to a specified angle. Slows down based on the current arm angle
-  public void ArmTurnToAngle(double angle) {
-    // Stop if angle is close enough
-    if (Math.abs(m_ArmEncoder.getPosition() - angle) <= Constants.ArmConstants.DegreeOfError) {
-      m_Arm.stopMotor();
-    }
-    // Spin counter-clockwise
-    else if ((m_ArmEncoder.getPosition() - angle) > 0) {
-      m_Arm.set(-Constants.ArmConstants.TurnToSpeed*
-      Math.min(1.0, Math.max((m_ArmEncoder.getPosition() - angle)/Constants.ArmConstants.SlowMultiplier, 0.0)));
-    }
-    // Spin clockwise
-    else if ((m_ArmEncoder.getPosition() - angle) < 0) {
-      m_Arm.set(Constants.ArmConstants.TurnToSpeed*
-      Math.min(1.0, Math.max((angle - m_ArmEncoder.getPosition())/Constants.ArmConstants.SlowMultiplier, 0.0)));
-    }
-    // Display SmartDashboard
-    SmartDashboard.putNumber(("Goal:"), angle);
-    SmartDashboard.putNumber(("Speed:"), Constants.ArmConstants.TurnToSpeed*Math.min(1.0, Math.max((angle - m_ArmEncoder.getPosition())/Constants.ArmConstants.SlowMultiplier, -1.0))*100);
-  }
-  */
 
 }

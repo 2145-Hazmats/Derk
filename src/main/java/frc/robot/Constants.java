@@ -43,9 +43,9 @@ public final class Constants {
 
     public static final double ManualSpeed = 0.60;
     // TurnToAngle constants
-    public static final double TurnToSpeed = 0.60; // initial speed of TurnToAngle
-    public static final double DegreeOfError = 0.5; // when TurnToAngle should stop the motor
-    public static final double SlowMultiplier = 20.0; // higher = smoother but slower
+    public static final double TurnToSpeed = 0.20; // initial speed of TurnToAngle
+    public static final double SlowMultiplier = 3.0; // higher = smoother but slower
+    public static final double MaxErrorSize = 1.0; // when TurnToAngle should stop the motor
   }
 
   // Wrist Constants

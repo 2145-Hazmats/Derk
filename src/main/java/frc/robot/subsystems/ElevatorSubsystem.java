@@ -12,15 +12,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.HazmatLib;
+import frc.robot.FakePID;
 
 public class ElevatorSubsystem extends SubsystemBase {
 
   private final CANSparkMax m_Elevator = new CANSparkMax(Constants.ElevatorConstants.kMotorID, MotorType.kBrushless);
   private final RelativeEncoder m_ElevatorEncoder = m_Elevator.getEncoder();
-  
-  // intialize new hazmatLib object
-  private HazmatLib m_HazmatLib = new HazmatLib();
 
   public ElevatorSubsystem() {
     // reset encoder to 0 when code is deployed. Not when the robot is enabled/disabled btw
@@ -50,38 +47,15 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public Command ElevatorTurnToDistance(double distance) {
-    return m_HazmatLib.CommandFakePID(
+    return new FakePID(
       distance,
       m_Elevator::set,
       m_ElevatorEncoder::getPosition,
-      0.20,
-      3.0,
-      1.0,
+      Constants.ElevatorConstants.TurnToSpeed,
+      Constants.ElevatorConstants.MaxErrorSize,
+      Constants.ElevatorConstants.SlowMultiplier,
       false,
       this);
   }
-
-  /*
-  // Move the elevator to a specified distance. Slows down based on the current arm distance
-  public void ElevatorTurnToDistance(double distance) {
-    // Stop if angle is close enough
-    if (Math.abs(m_ElevatorEncoder.getPosition() - distance) <= Constants.ElevatorConstants.DegreeOfError) {
-        m_Elevator.stopMotor();
-    }
-    // Move some direction
-    else if ((m_ElevatorEncoder.getPosition() - distance) > 0) {
-        m_Elevator.set(-Constants.ElevatorConstants.TurnToSpeed*
-      Math.min(1.0, Math.max((m_ElevatorEncoder.getPosition() - distance)/Constants.ElevatorConstants.SlowMultiplier, 0.0)));
-    }
-    // Move the other direction
-    else if ((m_ElevatorEncoder.getPosition() - distance) < 0) {
-        m_Elevator.set(Constants.ElevatorConstants.TurnToSpeed*
-      Math.min(1.0, Math.max((distance - m_ElevatorEncoder.getPosition())/Constants.ElevatorConstants.SlowMultiplier, 0.0)));
-    }
-    // Display SmartDashboard
-    SmartDashboard.putNumber(("Goal:"), distance);
-    SmartDashboard.putNumber(("Speed:"), Constants.ElevatorConstants.TurnToSpeed*Math.min(1.0, Math.max((distance - m_ElevatorEncoder.getPosition())/Constants.ElevatorConstants.SlowMultiplier, -1.0))*100);
-  }
-  */
 
 }
