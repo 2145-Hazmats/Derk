@@ -74,10 +74,8 @@ public class RobotContainer {
 
   private void configureBindings() {
     // ArmSubsystem controls
-    m_CoDriverController.a().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(0.0), m_ArmSubsystem).withTimeout(1.0) );
-    //m_CoDriverController.b().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(-30.0), m_ArmSubsystem).withTimeout(1.0) );
-    m_CoDriverController.x().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(-45.0), m_ArmSubsystem).withTimeout(1.0) );
-    //m_CoDriverController.x().onTrue( Commands.run(() -> m_ArmSubsystem.ArmTurnToAngle(45.0), m_ArmSubsystem).withTimeout(1.0) );
+    m_CoDriverController.a().onTrue(m_ArmSubsystem.ArmTurnToAngle(0.0));
+    m_CoDriverController.x().onTrue(m_ArmSubsystem.ArmTurnToAngle(-45.0));
 
     m_CoDriverController.y().onTrue(m_ElevatorSubsystem.ElevatorTurnToDistance(5.0));
     m_CoDriverController.b().onTrue(m_ElevatorSubsystem.ElevatorTurnToDistance(2.0));

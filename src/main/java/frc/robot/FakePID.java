@@ -8,16 +8,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class FakePID extends CommandBase{
-    double distance;
-    Consumer<Double> motorConsumer;
-    Supplier<Double> encoderSupplier;
-    double speedMultiplier;
-    double slow;
-    double maxErrorSize;
-    boolean reversed;
+    private double distance;
+    private Consumer<Double> motorConsumer;
+    private Supplier<Double> encoderSupplier;
+    private double speedMultiplier;
+    private double slow;
+    private double maxErrorSize;
+    private boolean reversed;
 
     /**
-    * Turns the motor to a specified distance. De/Accelerates based on distance.
+    * Turns the motor to a specified distance. De/accelerates based on distance.
     *
     * @param distance The distance to go to.
     * @param motorConsumer A function that sets the motor speed with parameter (double speed).
@@ -26,6 +26,7 @@ public class FakePID extends CommandBase{
     * @param slow Higher = slow earlier but -deacceleration. Lower = slow later but +deacceleration.
     * @param maxErrorSize The size of acceptable error at the end before turning the motor off.
     * @param reversed Normally clockwise is positive. Otherwise, make this true.
+    * @param requirements The subsystems to require.
     */
     public FakePID(
         double distance,
