@@ -40,10 +40,13 @@ public class RobotContainer {
     new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController m_CoDriverController =
     new CommandXboxController(OperatorConstants.kCoDriverControllerPort);
+  private final CommandXboxController m_3DriverController =
+    new CommandXboxController(OperatorConstants.k3DriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     s_Swerve.setDefaultCommand(
+      /*
       new TeleopSwerve(
         s_Swerve,
           () -> -m_DriverController.getLeftY(), // move up/down
@@ -51,6 +54,15 @@ public class RobotContainer {
           () -> -m_DriverController.getRightX(), // rotate
           () -> m_DriverController.back().getAsBoolean(), // robot centric button
           () -> m_DriverController.rightBumper().getAsBoolean() // slow button
+        ));
+      */
+      new TeleopSwerve(
+        s_Swerve,
+          () -> -m_3DriverController.getLeftY(), // move up/down
+          () -> -m_3DriverController.getLeftX(), // move left/right
+          () -> -m_3DriverController.getRightX(), // rotate
+          () -> m_3DriverController.back().getAsBoolean(), // robot centric button
+          () -> m_3DriverController.rightBumper().getAsBoolean() // slow button
         ));
     m_ArmSubsystem.setDefaultCommand(
       Commands.run(
@@ -86,6 +98,10 @@ public class RobotContainer {
 
     // Swerve controls
     m_DriverController.start().onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+
+    // Driver 3 controls
+    m_3DriverController.leftBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(-1.0));
+    m_3DriverController.rightBumper().whileTrue(m_ClawSubsystem.SetClawSpeedCommand(1.0));
   }
 
   // Return auton command to main
